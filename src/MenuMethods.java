@@ -113,7 +113,7 @@ public class MenuMethods {
     int command = readCommand(menu);
     while (command != menu.size()) {
       switch (command) {
-        case 1 -> System.out.println("view TaBLE");    // Просмотр данных
+        case 1 -> RecordMethods.printBudget("res/budget.txt");    // Просмотр данных
         case 2 -> System.out.println("ADD RECORD");    // Добавить запись
         case 3 -> System.out.println("CHECK RECORD");  // Изменить запись
         case 4 -> System.out.println("DELETE RECORD"); // Удалить запись
