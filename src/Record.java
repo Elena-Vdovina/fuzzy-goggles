@@ -1,13 +1,13 @@
 import java.util.Date;
 
-public class Budget {
+public class Record {
   private Date date;         // дата
   private String article;    // наименование статьи расхода или дохода
   private int amount;        // сумма в центах
-  private int typ;           // тип - доход или расход
+  private int type;           // тип - доход или расход
   private int category;      // тип - из справочника
 
-  public Budget(){
+  public Record(String s, String s1, int amount, String type, String category){
 
   }
 
@@ -24,7 +24,7 @@ public class Budget {
   }
 
   public void setTyp(int typ) {
-    this.typ = typ;
+    this.type = type;
   }
 
   public void setCategory(int category) {
@@ -44,7 +44,7 @@ public class Budget {
   }
 
   public int getTyp() {
-    return typ;
+    return type;
   }
 
   public int getCategory() {
@@ -53,11 +53,11 @@ public class Budget {
 
   @Override
   public String toString() {
-    return "Budget{" +
+    return "Record {" +
         "date=" + date +
         ", article='" + article + '\'' +
         ", amount=" + amount +
-        ", typ=" + typ +
+        ", type=" + type +
         ", category=" + category +
         '}';
   }
