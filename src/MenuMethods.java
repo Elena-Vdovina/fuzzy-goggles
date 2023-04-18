@@ -1,10 +1,13 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MenuMethods {
+
+  public static String pathToFile_;
 
   /**
    * Создаем основное меню
@@ -87,14 +90,20 @@ public class MenuMethods {
    *
    * @throws IOException Обработка некорректной команды
    */
-  public static void menu() throws IOException {
+  public static void menu() throws IOException, ParseException {
     List<String> menu = listMenu();
     int command = readCommand(menu);
     while (command != menu.size()) {
       switch (command) {
-        case 1 -> System.out.println("view file");      // Выбрать другой файл
-        case 2 -> System.out.println("new file");       // Создать новый файл
-        case 3 -> menuTable();                          // Меню работы с таблицей
+        case 1 ->
+            pathToFile_ = FileMethods.openFile(pathToFile_);               // Выбрать другой файл
+        case 2 -> pathToFile_ = FileMethods.changeFile(pathToFile_);       // Создать новый файл
+        case 3 -> { // Меню работы с таблицей
+          RecordMethods.records = FileMethods.readFile();
+          Guide.expenses=Guide.readGuideE();
+          Guide.income=Guide.readGuideI();
+          menuTable();
+        }
         case 4 -> menuGuide();                          // Меню работы со справочниками
         case 5 -> System.out.println("analytics");      // ????
       }
@@ -108,13 +117,13 @@ public class MenuMethods {
    *
    * @throws IOException Обработка некорректной команды
    */
-  public static void menuTable() throws IOException {
+  public static void menuTable() throws IOException, ParseException {
     List<String> menu = listMenuT();
     int command = readCommand(menu);
     while (command != menu.size()) {
       switch (command) {
-        case 1 -> RecordMethods.printBudget("res/budget.txt");    // Просмотр данных
-        case 2 -> System.out.println("ADD RECORD");    // Добавить запись
+        case 1 -> RecordMethods.printRecord();   // Просмотр данных
+        case 2 -> RecordMethods.addRecord();    // Добавить запись
         case 3 -> System.out.println("CHECK RECORD");  // Изменить запись
         case 4 -> System.out.println("DELETE RECORD"); // Удалить запись
         case 5 -> System.out.println("SORT1 RECORD");  // Сортировать по
