@@ -12,7 +12,12 @@ public class RecordMethods {
 
   public static List<Record> records;
 
-  // Выводит список на экран
+  /**
+   * Выводит список на экран.
+   *
+   * @param
+   * @return
+   */
   public static void printRecord(/*String pathToFile*/) throws IOException, ParseException {
     System.out.println();
     System.out.println("Бюджет");
@@ -23,6 +28,12 @@ public class RecordMethods {
     }
   }
 
+  /**
+   * Добавляет запись в конец списка, записывает в файл.
+   *
+   * @param
+   * @return выводит итоговый список
+   */
   public static void addRecord() throws IOException, ParseException {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     System.out.println("Новая запись:");
@@ -53,7 +64,12 @@ public class RecordMethods {
     printRecord();
   }
 
-
+  /**
+   * Проверяет корректность формата введенной даты. Шаблон: "dd.MM.yyyy"
+   *
+   * @param
+   * @return возвращает строку
+   */
   public static String dateValidation(BufferedReader br) {
     String dateStr = "";
     boolean tr = false; // флаг для проверки условий
@@ -77,6 +93,12 @@ public class RecordMethods {
     return dateStr;
   }
 
+  /**
+   * Удаляет запись из списка, записывает итоговый список в файл.
+   *
+   * @param
+   * @return выводит итоговый список
+   */
   public static void removeRecord() throws IOException, ParseException {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     printRecord();
@@ -91,6 +113,12 @@ public class RecordMethods {
     printRecord();
   }
 
+  /**
+   * Проверяет корректность введенного ответа на вопрос. Варианты ответов: да/нет/1/0.
+   *
+   * @param
+   * @return возвращает число 1/0
+   */
   public static int yesNoValidation(BufferedReader br) throws IOException {
     String answer = br.readLine().toUpperCase();
     while (!(answer.equals("0") || answer.equals("1") || answer.equals("ДА") ||
@@ -100,15 +128,21 @@ public class RecordMethods {
       answer = br.readLine().toUpperCase();
     }
     switch (answer) {
-      case "0", "НЕТ" -> answer = "0"; // не выполнено
-      case "1", "ДА" -> answer = "1"; // выполнено
+      case "0", "НЕТ" -> answer = "0"; // нет
+      case "1", "ДА" -> answer = "1"; // да
     }
     return Integer.parseInt(answer);
   }
 
+  //
 
-  // Выводит список расходов/доходов c сортировкой по дате
-  public static void printTypeList(String type) throws IOException, ParseException {
+  /**
+   * Выводит список расходов/доходов c сортировкой по дате
+   *
+   * @param type тип записи(расхды/доходы) для отбора из списка
+   * @return вывод списка отобранных значений с итоговой суммой
+   */
+  public static void printTypeList(String type) {
     List<Record> records = RecordMethods.records;
     List<Record> selected = new ArrayList<>();
     System.out.println();
@@ -130,7 +164,14 @@ public class RecordMethods {
     System.out.println(text + SumAmount(selected));
   }
 
-  public static String SumAmount(List<Record> records) throws IOException, ParseException {
+  /**
+   * Считает сумму денег в переданном списке, переводит результат в десятичную дробь с округлением
+   * до сотых долей.
+   *
+   * @param records список
+   * @return строка с суммой
+   */
+  public static String SumAmount(List<Record> records) {
     int result = 0;
     for (Record record : records) {
       result += record.getAmount();
