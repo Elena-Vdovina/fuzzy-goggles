@@ -96,11 +96,16 @@ public class MenuMethods {
     int command = readCommand(menu);
     while (command != menu.size()) {
       switch (command) {
-        case 1 ->
-            pathToFile_ = FileMethods.openFile(pathToFile_);               // Выбрать другой файл
-        case 2 -> pathToFile_ = FileMethods.changeFile(pathToFile_);       // Создать новый файл
+        case 1 -> // Выбрать другой файл
+            pathToFile_ = FileMethods.openFile(pathToFile_);
+        case 2 -> // Создать новый файл
+            pathToFile_ = FileMethods.changeFile(pathToFile_);
         case 3 -> { // Меню работы с таблицей
           RecordMethods.records = FileMethods.readFile();
+          if (RecordMethods.records.size() == 0) {
+            FileMethods.createNewList();
+            RecordMethods.records = FileMethods.readFile();
+          }
           Guide.expenses = Guide.readGuideE();
           Guide.income = Guide.readGuideI();
           menuTable();
@@ -127,8 +132,8 @@ public class MenuMethods {
         case 2 -> RecordMethods.addRecord();    // Добавить запись
         case 3 -> System.out.println("CHECK RECORD");  // Изменить запись
         case 4 -> RecordMethods.removeRecord(); // Удалить запись
-        case 5 -> RecordMethods.printTypeList("expenses"); // Список расходов
-        case 6 -> RecordMethods.printTypeList("income"); // Список доходов
+        case 5 -> System.out.println("SORT1 RECORD");//RecordMethods.printTypeList("expenses"); // Список расходов
+        case 6 -> System.out.println("SORT1 RECORD");//RecordMethods.printTypeList("income"); // Список доходов
         case 7 -> System.out.println("SORT1 RECORD");  // Сортировать по
 
       }
