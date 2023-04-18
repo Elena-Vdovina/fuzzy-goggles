@@ -5,11 +5,11 @@ import java.util.Date;
 
 public class Record {
 
-  private static Date date;         // дата
-  private static String article;    // наименование статьи расхода или дохода
-  private static int amount;        // сумма в центах
-  private static String type;           // тип - доход или расход
-  private static String category;      // тип - из справочника
+  private Date date;         // дата
+  private String article;    // наименование статьи расхода или дохода
+  private int amount;        // сумма в центах
+  private String type;           // тип - доход или расход
+  private String category;      // тип - из справочника
   private static final DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
 
   public Record(String dateStr, String article, int amount, String type, String category)
@@ -49,7 +49,7 @@ public class Record {
     return date;
   }
 
-  public static String getDateStr() {
+  public String getDateStr() {
     return formatter.format(date);
   }
 
@@ -76,7 +76,7 @@ public class Record {
         category);
   }
 
-  public static String toStringFile() {
+  public String toStringFile() {
     return String.format("%s;%s;%d;%s;%s\n", getDateStr(), article, amount, type, category);
   }
 }
