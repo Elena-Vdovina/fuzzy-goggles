@@ -15,6 +15,9 @@ public class RecordMethods {
   public static void printRecord() {
     System.out.println();
     System.out.println("Бюджет");
+    //+++++++++++++++++++++++
+    System.out.println("6 " + MenuMethods.pathToFile_);
+
     int i = 0;
     for (Record record : RecordMethods.records) {
       System.out.println(i + 1 + " " + record.toString());
@@ -25,7 +28,7 @@ public class RecordMethods {
   public static void addRecord() throws IOException, ParseException {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     System.out.println("Новая запись:");
-    System.out.print("Дата (\"дд.мм.гггг\") - ");
+    System.out.print("Дата (\"ДД.ММ.ГГГГ\") - ");
     String dateStr = dateValidation(br); // проверка формата ввода
     System.out.print("Содержание ");
     String article = br.readLine();
@@ -40,7 +43,7 @@ public class RecordMethods {
       amountD = Double.parseDouble(br.readLine());
     }
     int amount = (int) amountD * 100;
-    System.out.println("Доход/расход");
+    System.out.print("Доход/расход: ");
     String type = br.readLine();
     System.out.print("Категория: ");
     String category = br.readLine();
