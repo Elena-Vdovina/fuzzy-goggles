@@ -5,8 +5,9 @@ public class Main {
 
 
   public static void main(String[] args) throws IOException, ParseException {
-    MenuMethods.pathToFile_ ="";
-    MenuMethods.pathToFile_=FileMethods.openFile(MenuMethods.pathToFile_);  // определяем файл пользователя
+    MenuMethods.pathToFile_ = "";
+    // определяем файл пользователя
+    MenuMethods.pathToFile_ = FileMethods.openFile(MenuMethods.pathToFile_);
     MenuMethods.menu();  // вход в основное меню
   }
 

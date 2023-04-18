@@ -1,50 +1,45 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Guide {
 
-    final public static char SEP = ';';
-    public static List<String> income;
-    public static List<String> expenses;
+  final public static char SEP = ';';
+  public static List<String> income;
+  public static List<String> expenses;
 
-    public static List<String> readGuideI(){
-      income.add("Аванс");
-      income.add("Зарплата");
-      income.add("Проценты");
-      income.add("Гонорар");
-      income.add("Подарки");
-      income.add("Пособие");
-      return income;
-    }
+  public static List<String> readGuideI() {
+    List<String> income = new ArrayList<>();
+    income.add("Аванс");
+    income.add("Зарплата");
+    income.add("Проценты");
+    income.add("Гонорар");
+    income.add("Подарки");
+    income.add("Пособие");
+    return income;
+  }
 
-    public static List<String> readGuideE(){
-      expenses.add("Коммунальные платежи");
-      expenses.add("Продукты");
-      expenses.add("Одежда");
-      expenses.add("Транспорт");
-      expenses.add("Бытовая химия");
-      expenses.add("Аптека");
-      expenses.add("Обучение");
-      expenses.add("Игрушки");
-      expenses.add("Канцелярия");
-      expenses.add("Домашние животные");
-      expenses.add("Жилье");
-      expenses.add("Ремонт");
-      expenses.add("Техника");
-      expenses.add("Мебель");
-      expenses.add("Развлечения");
-      expenses.add("Связь");
-      expenses.add("Копилка");
-      expenses.add("Инвестиции");
-      return expenses;
-    }
+  public static List<String> readGuideE() {
+    List<String> expenses = new ArrayList<>();
+    expenses.add("Коммунальные платежи");
+    expenses.add("Продукты");
+    expenses.add("Одежда");
+    expenses.add("Транспорт");
+    expenses.add("Бытовая химия");
+    expenses.add("Аптека");
+    expenses.add("Обучение");
+    expenses.add("Игрушки");
+    expenses.add("Канцелярия");
+    expenses.add("Домашние животные");
+    expenses.add("Жилье");
+    expenses.add("Ремонт");
+    expenses.add("Техника");
+    expenses.add("Мебель");
+    expenses.add("Развлечения");
+    expenses.add("Связь");
+    expenses.add("Копилка");
+    expenses.add("Инвестиции");
+    return expenses;
+  }
 /*
     public static void main(String[] args) throws IOException {
       File phoneBook = new File("res/phonebook.txt"); // создали путь к файлу
@@ -87,4 +82,4 @@ public class Guide {
     }
 
  */
-  }
+}

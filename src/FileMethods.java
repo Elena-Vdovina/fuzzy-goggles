@@ -1,3 +1,4 @@
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -8,7 +9,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class FileMethods {
@@ -20,7 +20,7 @@ public class FileMethods {
    * @return pathToFile имя выбранного файла
    * @throws IOException не обрабатывается
    */
-  public static String openFile(String pathToFile) throws IOException {
+  public static String openFile(String pathToFile) throws IOException, ParseException {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     pathToFile = changeFile(pathToFile);
     System.out.println("1 " + pathToFile);
@@ -47,7 +47,7 @@ public class FileMethods {
    * @return pathStr имя выбранного файла
    * @throws IOException не обрабатывается
    */
-  public static String changeFile(String pathToFile) throws IOException {
+  public static String changeFile(String pathToFile) throws IOException, ParseException {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     if (!pathToFile.isEmpty()) {
       System.out.println("Текущий файл: " + pathToFile);
@@ -91,10 +91,11 @@ public class FileMethods {
    * @return pathStr имя выбранного файла
    * @throws IOException не обрабатывается
    */
-  public static String newFile(String pathToFile, String newPath) throws IOException {
+  public static String newFile(String pathToFile, String newPath)
+      throws IOException, ParseException {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     String pathStr = "";
-    System.out.println(pathToFile+" "+newPath);
+    System.out.println(pathToFile + " " + newPath);
     if (!pathToFile.isEmpty()) {
       System.out.println("1 - Создать список дел в файле " + newPath);
       System.out.println("2 - Создать новый список дел в файле " + pathToFile);
@@ -123,45 +124,30 @@ public class FileMethods {
     return pathStr;
   }
 
-  public static void createNewList(String pathToFile) throws IOException {
+  public static void createNewList(String pathToFile) throws IOException, ParseException {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     System.out.println("Создание нового списка дел: ");
-    List<Record> records = new ArrayList<>();
+    List<java.lang.Record> records = new ArrayList<>();
     // прочитали
     int i = 1;
     while (i == 1) { //
       System.out.println();
-      System.out.println("Новая запись:");
-      System.out.print("Дата (\"дд.мм.гггг\") - ");
-      // String dateStr = dateValidation(br);
-      System.out.print("Содержание ");
-      //String name = br.readLine();
-      System.out.print("Сумма ");
-      //int prioritet = priorityValidation(br);
-      System.out.print("Доход / расход (1/0) - ");
-      //int status = checkValidation(br);
-      System.out.print("Категория (номер) - ");
-      //int status = checkValidation(br);
-      // добавили
-      //Event event = new Event(name, prioritet, dateStr, status);
-      //events.add(event);
-      System.out.println();
+      RecordMethods.addRecord();
       System.out.print("Добавить новую запись (1-да, 2-выход): ");
       i = Integer.parseInt(br.readLine());
     }
-    writeFile(/*RecordMethods.records, MenuMethods.pathToFile_*/);
+    writeFile();
     //printList(pathToFile);
   }
 
   /**
    * Метод чтения данных из файла
    *
-   *   имя текущего файла
    * @return List<Record> records лист с записями
    * @throws IOException               если файла с записями не существует
    * @throws IndexOutOfBoundsException если файл с записями пустой
    */
-  public static List<Record> readFile(/*String pathToFile*/) throws IOException, ParseException {
+  public static List<Record> readFile() throws IOException, ParseException {
     RecordMethods.records = new ArrayList<>();
     try {
       List<String> lines = new ArrayList<>();
@@ -170,13 +156,17 @@ public class FileMethods {
       while ((line = fr.readLine()) != null) {
         lines.add(line);
       }
+      System.out.println(lines);
+
       for (String s : lines) {
         List<String> columns = List.of(s.split(";", -1));
         int amount = Integer.parseInt(columns.get(2));
         Record record = new Record(columns.get(0), columns.get(1), amount, columns.get(3),
             columns.get(4));
         RecordMethods.records.add(record);
+        System.out.println(record);
       }
+
       fr.close();
     } catch (IOException e) {
       System.out.println("У Вас не обнаружен список дел");
@@ -193,16 +183,12 @@ public class FileMethods {
   /**
    * Метод записи List<Record> records в файл
    *
-   * records    лист с записями
-   * pathToFile имя файла в который происходит запись
    * @throws IOException не обрабатывается
    */
-  public static void writeFile(/*List<Record> records, String pathToFile*/) throws IOException {
+  public static void writeFile() throws IOException {
     FileWriter fr = new FileWriter(MenuMethods.pathToFile_);
     for (Record record : RecordMethods.records) {
-     // String line = record.getDate() + ";" + record.getArticle() + ";" + record.getAmount() + ";"
-       //   + record.getCategory() + "\n"; // заменить на toStringFile из Record
-      fr.write(record.toString());
+      fr.write(record.toStringFile());
     }
     fr.close();
   }

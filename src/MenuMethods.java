@@ -100,8 +100,8 @@ public class MenuMethods {
         case 2 -> pathToFile_ = FileMethods.changeFile(pathToFile_);       // Создать новый файл
         case 3 -> { // Меню работы с таблицей
           RecordMethods.records = FileMethods.readFile();
-          Guide.expenses=Guide.readGuideE();
-          Guide.income=Guide.readGuideI();
+          Guide.expenses = Guide.readGuideE();
+          Guide.income = Guide.readGuideI();
           menuTable();
         }
         case 4 -> menuGuide();                          // Меню работы со справочниками

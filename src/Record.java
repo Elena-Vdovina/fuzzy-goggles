@@ -5,14 +5,14 @@ import java.util.Date;
 
 public class Record {
 
-  private Date date;         // дата
-  private String article;    // наименование статьи расхода или дохода
-  private int amount;        // сумма в центах
-  private String type;           // тип - доход или расход
-  private String category;      // тип - из справочника
+  private static Date date;         // дата
+  private static String article;    // наименование статьи расхода или дохода
+  private static int amount;        // сумма в центах
+  private static String type;           // тип - доход или расход
+  private static String category;      // тип - из справочника
   private static final DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
 
-  public Record(String dateStr, String article, double amount, String type, String category)
+  public Record(String dateStr, String article, int amount, String type, String category)
       throws ParseException {
     setDate(dateStr);
     this.article = article;
@@ -33,8 +33,8 @@ public class Record {
     this.article = article;
   }
 
-  public void setAmount(double amount) {
-    this.amount = (int) amount * 100;
+  public void setAmount(int amount) {
+    this.amount = amount;
   }
 
   public void setType(String type) {
@@ -49,7 +49,7 @@ public class Record {
     return date;
   }
 
-  public String getDateStr() {
+  public static String getDateStr() {
     return formatter.format(date);
   }
 
@@ -71,8 +71,13 @@ public class Record {
 
   @Override
   public String toString() {
-    double amountD=(double)(amount / 100);
+    double amountD = (double) amount / 100;
     return String.format("%-12s %30s %10.2f %-10s %-20s", getDateStr(), article, amountD, type,
         category);
   }
+
+  public static String toStringFile() {
+    return String.format("%s;%s;%d;%s;%s\n", getDateStr(), article, amount, type, category);
+  }
 }
+
