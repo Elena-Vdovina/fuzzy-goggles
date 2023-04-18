@@ -36,7 +36,8 @@ public class MenuMethods {
     listMenuT.add("Добавить запись");
     listMenuT.add("Изменить запись");
     listMenuT.add("Удалить запись");
-    listMenuT.add("Сортировать по");
+    listMenuT.add("Только расходы");
+    listMenuT.add("Только доходы");
     listMenuT.add("Сортировать по");
     listMenuT.add("Вернуться в основное меню");
     return listMenuT;
@@ -126,8 +127,10 @@ public class MenuMethods {
         case 2 -> RecordMethods.addRecord();    // Добавить запись
         case 3 -> System.out.println("CHECK RECORD");  // Изменить запись
         case 4 -> RecordMethods.removeRecord(); // Удалить запись
-        case 5 -> System.out.println("SORT1 RECORD");  // Сортировать по
-        case 6 -> System.out.println("SORT2 RECORD");  // Сортировать по
+        case 5 -> RecordMethods.printTypeList("expenses"); // Список расходов
+        case 6 -> RecordMethods.printTypeList("income"); // Список доходов
+        case 7 -> System.out.println("SORT1 RECORD");  // Сортировать по
+
       }
       command = readCommand(menu);                     // Вернуться в основное меню
     }
