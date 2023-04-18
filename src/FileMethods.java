@@ -148,7 +148,7 @@ public class FileMethods {
    * @throws IndexOutOfBoundsException если файл с записями пустой
    */
   public static List<Record> readFile() throws IOException, ParseException {
-    RecordMethods.records = new ArrayList<>();
+    List<Record> records = new ArrayList<>();
     try {
       List<String> lines = new ArrayList<>();
       BufferedReader fr = new BufferedReader(new FileReader(MenuMethods.pathToFile_));
@@ -163,7 +163,7 @@ public class FileMethods {
         int amount = Integer.parseInt(columns.get(2));
         Record record = new Record(columns.get(0), columns.get(1), amount, columns.get(3),
             columns.get(4));
-        RecordMethods.records.add(record);
+        records.add(record);
         System.out.println(record);
       }
 
@@ -177,7 +177,7 @@ public class FileMethods {
       System.out.println(Colors.RED + "В текущем файле нет списка дел!" + Colors.RESET);
       createNewList(MenuMethods.pathToFile_);
     }
-    return RecordMethods.records;
+    return records;
   }
 
   /**
