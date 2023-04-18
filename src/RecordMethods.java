@@ -76,4 +76,34 @@ public class RecordMethods {
     return dateStr;
   }
 
+  public static void removeRecord() throws IOException, ParseException {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    printRecord();
+    List<Record> records = RecordMethods.records;
+    System.out.print("Введите номер записи, которую хотите удалить ");
+    int n = Integer.parseInt(br.readLine());
+    System.out.print("Вы уверены? (1/0) - ");
+    int answer = yesNoValidation(br); // проверка ввода
+    // записали
+    records.remove(n - 1);
+    FileMethods.writeFile();
+    printRecord();
+  }
+
+  public static int yesNoValidation(BufferedReader br) throws IOException {
+    String answer = br.readLine().toUpperCase();
+    while (!(answer.equals("0") || answer.equals("1") || answer.equals("ДА") ||
+        answer.equals("НЕТ"))) {
+      // проверка на соответствующее значение
+      System.out.print(Colors.RED + "Некорректное значение. Попробуйте еще раз: " + Colors.RESET);
+      answer = br.readLine().toUpperCase();
+    }
+    switch (answer) {
+      case "0", "НЕТ" -> answer = "0"; // не выполнено
+      case "1", "ДА" -> answer = "1"; // выполнено
+    }
+    return Integer.parseInt(answer);
+  }
+
+
 }

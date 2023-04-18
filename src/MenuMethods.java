@@ -125,7 +125,7 @@ public class MenuMethods {
         case 1 -> RecordMethods.printRecord();   // Просмотр данных
         case 2 -> RecordMethods.addRecord();    // Добавить запись
         case 3 -> System.out.println("CHECK RECORD");  // Изменить запись
-        case 4 -> System.out.println("DELETE RECORD"); // Удалить запись
+        case 4 -> RecordMethods.removeRecord(); // Удалить запись
         case 5 -> System.out.println("SORT1 RECORD");  // Сортировать по
         case 6 -> System.out.println("SORT2 RECORD");  // Сортировать по
       }
