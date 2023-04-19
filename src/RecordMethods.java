@@ -20,7 +20,7 @@ public class RecordMethods {
     System.out.println("Бюджет");
     int i = 0;
     for (Record record : RecordMethods.records) {
-      System.out.println(i + 1 + " " + record.toString());
+      System.out.printf("%4d   %s\n", (i + 1), record.toString());
       ++i;
     }
   }
@@ -33,11 +33,20 @@ public class RecordMethods {
     System.out.println("Новая запись:");
     System.out.print("Дата (\"ДД.ММ.ГГГГ\") - ");
     String dateStr = dateValidation(br); // проверка формата ввода
-    System.out.print("Содержание ");
-    String article = br.readLine();
-    while (article.isEmpty()) { // проверка на пустоту для названия
-      System.out.println(Colors.RED + "Содержание не может быть пустым:" + Colors.RESET);
-      article = br.readLine();
+    System.out.print("Доход/расход: (1/0): ");
+    int typeN = Integer.parseInt(br.readLine());
+    while ((typeN < 0) || typeN > 1) {
+      System.out.println(Colors.RED + "Доход - 1, расход - 0" + Colors.RESET);
+      typeN = Integer.parseInt(br.readLine());
+    }
+    String type;
+    String category;
+    if (typeN == 1) {
+      type = "Доход";
+      category = categoryGuide(Guide.income, br);
+    } else {
+      type = "Расход";
+      category = categoryGuide(Guide.expenses, br);
     }
     System.out.print("Сумма ");
     double amountD = Double.parseDouble(br.readLine());
@@ -46,16 +55,88 @@ public class RecordMethods {
       amountD = Double.parseDouble(br.readLine());
     }
     int amount = (int) amountD * 100;
-    System.out.print("Доход/расход: ");
-    String type = br.readLine();
-    System.out.print("Категория: ");
-    String category = br.readLine();
-    // добавили
+    System.out.print("Содержание ");
+    String article = br.readLine();
+    while (article.isEmpty()) { // проверка на пустоту для названия
+      System.out.println(Colors.RED + "Содержание не может быть пустым:" + Colors.RESET);
+      article = br.readLine();
+    }
     Record record = new Record(dateStr, article, amount, type, category);
     records.add(record);
-    // записали в файл
     FileMethods.writeFile(MenuMethods.pathToFile_, RecordMethods.records);
     printRecord();
+  }
+
+  /**
+   * Добавляет запись в конец списка, записывает в файл, выводит итоговый список.
+   */
+  public static void changeRecord() throws IOException, ParseException {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    System.out.println("Введите номер записи для редактирования: ");
+    int n = Integer.parseInt(br.readLine());
+    Record record = RecordMethods.records.get(n - 1);
+    System.out.println("Если строка ввода осталась пустой поле записи не меняется!");
+    System.out.println("Дата " + record.getDateStr());
+    System.out.print("Дата (\"ДД.ММ.ГГГГ\") - ");
+    String dateStr = dateValidation(br);
+    System.out.println("Доход/расход: " + record.getType());
+    System.out.print("Доход/расход: (1/0): ");
+    int typeN = Integer.parseInt(br.readLine());
+    while ((typeN < 0) || typeN > 1) {
+      System.out.println(Colors.RED + "Доход - 1, расход - 0" + Colors.RESET);
+      typeN = Integer.parseInt(br.readLine());
+    }
+    String type;
+    String category;
+    if (typeN == 1) {
+      type = "Доход";
+      System.out.println("Категория: " + record.getCategory());
+      category = categoryGuide(Guide.income, br);
+    } else {
+      type = "Расход";
+      category = categoryGuide(Guide.expenses, br);
+    }
+    System.out.println("Сумма: " + (double) record.getAmount() / 100);
+    System.out.print("Сумма ");
+    double amountD = Double.parseDouble(br.readLine());
+    while (amountD <= 0) { // должна быть больше 0
+      System.out.println(Colors.RED + "Сумма должна быть >0: " + Colors.RESET);
+      amountD = Double.parseDouble(br.readLine());
+    }
+    int amount = (int) amountD * 100;
+    System.out.println("Содержание: " + record.getArticle());
+    System.out.print("Содержание ");
+    String article = br.readLine();
+    while (article.isEmpty()) { // проверка на пустоту для названия
+      System.out.println(Colors.RED + "Содержание не может быть пустым:" + Colors.RESET);
+      article = br.readLine();
+    }
+    record = new Record(dateStr, article, amount, type, category);
+    records.set(n - 1, record);
+    FileMethods.writeFile(MenuMethods.pathToFile_, RecordMethods.records);
+    printRecord();
+  }
+
+
+  /**
+   * Метод выбора категории дохода/расхода
+   *
+   * @param guide справочник дохода/расхода
+   * @param br    BufferedReader
+   * @return String категорию дохода/расхода
+   * @throws IOException цикл while заменяет условие - стражника
+   */
+  public static String categoryGuide(List<String> guide, BufferedReader br) throws IOException {
+    Guide.printGuide(guide);
+    System.out.print("Выберите номер категории: ");
+    int categoryN = Integer.parseInt(br.readLine());
+    while ((categoryN < 1) || (categoryN > guide.size())) {
+      System.out.println(
+          Colors.RED + "Номер категории должен быть в диапазоне от 1 до " + guide.size()
+              + ": " + Colors.RESET);
+      categoryN = Integer.parseInt(br.readLine());
+    }
+    return guide.get(categoryN - 1);
   }
 
   /**
@@ -125,9 +206,9 @@ public class RecordMethods {
   }
 
   /**
-   * Выводит список расходов/доходов c сортировкой по дате и категориям, и итоговую сумму.
+   * Выводит список расходов/доходов с сортировкой по дате и категориям, и итоговую сумму.
    *
-   * @param type тип записи(расхды/доходы) для отбора из списка
+   * @param type тип записи(расходы/доходы) для отбора из списка
    */
   public static void printTypeList(String type) {
     List<Record> records = RecordMethods.records;
