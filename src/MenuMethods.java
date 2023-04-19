@@ -92,6 +92,8 @@ public class MenuMethods {
    */
   public static void menu() throws IOException, ParseException {
     List<String> menu = listMenu();
+    Guide.expenses = Guide.readGuideE();
+    Guide.income = Guide.readGuideI();
     int command = readCommand(menu);
     while (command != menu.size()) {
       switch (command) {
@@ -105,15 +107,10 @@ public class MenuMethods {
             FileMethods.createNewList();
             RecordMethods.records = FileMethods.readFile();
           }
-          Guide.expenses = Guide.readGuideE();
-          Guide.income = Guide.readGuideI();
           menuTable();
         }
-        case 4 -> {                                             // Меню работы со справочниками
-          Guide.expenses = Guide.readGuideE();
-          Guide.income = Guide.readGuideI();
-          menuGuide();
-        }
+        case 4 -> menuGuide();                                  // Меню работы со справочниками
+
         case 5 -> System.out.println("analytics");              // ????
       }
       command = readCommand(menu);                              // Выход из программы
