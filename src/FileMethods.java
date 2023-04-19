@@ -72,7 +72,6 @@ public class FileMethods {
           }
         } else {
           pathStr = newPath;                                                // берем новое имя файла
-          System.out.println(newPath + " " + pathStr);
         }
       } else {                                                            // если файл не существует
         System.out.println(Colors.RED + "Нет файла " + newPath + " с данными" + Colors.RESET);
@@ -196,7 +195,7 @@ public class FileMethods {
       System.out.println("У Вас не обнаружен списка");
       RecordMethods.records = createNewList();
       FileMethods.writeFile(MenuMethods.pathToFile_, RecordMethods.records);
-     } catch (IndexOutOfBoundsException e) {
+    } catch (IndexOutOfBoundsException e) {
       System.out.println(Colors.RED + "В текущем файле нет списка!" + Colors.RESET);
       RecordMethods.records = createNewList();
       FileMethods.writeFile(MenuMethods.pathToFile_, RecordMethods.records);
@@ -206,8 +205,9 @@ public class FileMethods {
 
   /**
    * Метод записывает лист списка в файл
+   *
    * @param pathToFile имя текущего файла
-   * @param records лист списка
+   * @param records    лист списка
    * @throws IOException не обрабатывается
    */
   public static void writeFile(String pathToFile, List<Record> records) throws IOException {
