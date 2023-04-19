@@ -15,9 +15,6 @@ public class RecordMethods {
   public static void printRecord() {
     System.out.println();
     System.out.println("Бюджет");
-    //+++++++++++++++++++++++
-    System.out.println("6 " + MenuMethods.pathToFile_);
-
     int i = 0;
     for (Record record : RecordMethods.records) {
       System.out.println(i + 1 + " " + record.toString());
