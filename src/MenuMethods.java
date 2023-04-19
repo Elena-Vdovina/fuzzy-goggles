@@ -110,7 +110,11 @@ public class MenuMethods {
           Guide.income = Guide.readGuideI();
           menuTable();
         }
-        case 4 -> menuGuide();                          // Меню работы со справочниками
+        case 4 -> {
+          Guide.expenses = Guide.readGuideE();
+          Guide.income = Guide.readGuideI();
+          menuGuide();                          // Меню работы со справочниками
+        }
         case 5 -> System.out.println("analytics");      // ????
       }
       command = readCommand(menu);                      // Выход из программы
@@ -152,10 +156,10 @@ public class MenuMethods {
     int command = readCommand(menu);
     while (command != menu.size()) {
       switch (command) {
-        case 1 -> System.out.println("vieW DOHOD");  // Просмотр статей доходов
-        case 2 -> System.out.println("ADD DOHOD");   // Добавить статью дохода
-        case 3 -> System.out.println("VIEW RASHOD"); // Просмотр статей расходов
-        case 4 -> System.out.println("ADD RASHOD");  // Добавить статью расхода
+        case 1 -> Guide.printGuideI();  // Просмотр статей доходов
+        case 2 -> Guide.addGuideI();   // Добавить статью дохода
+        case 3 -> Guide.printGuideE(); // Просмотр статей расходов
+        case 4 -> Guide.addGuideE();  // Добавить статью расхода
       }
       command = readCommand(menu);                   // Вернуться в основное меню
     }
