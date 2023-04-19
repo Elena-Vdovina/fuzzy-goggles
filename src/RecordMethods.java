@@ -206,31 +206,97 @@ public class RecordMethods {
   }
 
   /**
-   * Выводит список расходов/доходов с сортировкой по дате и категориям, и итоговую сумму.
+   * Выводит список расходов/доходов с сортировкой по дате и категориям, и итоговую сумму. Отбирает
+   * список расходов/доходов на текущий месяц.
    *
    * @param type тип записи(расходы/доходы) для отбора из списка
    */
-  public static void printTypeList(String type) {
+  public static List<Record> doTypeList(String type) {
     List<Record> records = RecordMethods.records;
     List<Record> selected = new ArrayList<>();
-    System.out.println();
+    int i = 0; // счетчик
+    boolean y = false; // флаг для определения пустого списка
     for (Record record : records) {
-      if ((record.getType().equals(type))) {
+      if (record.getType().equals(type) && (record.getMonth() == DateMethods.checkCurrentMonth())) {
         selected.add(record);
+        ++i;
+        y = true;
       }
     }
-    selected.sort(new RecordDateCategoryAmountComparator());
-    for (Record record : selected) {
-      System.out.println(record);
+    if (!y) {
+      System.out.println("Список на текущий месяц пуст");
     }
-    String text;
-    if (type.equals("expenses")) {
-      text = "Сумма расходов за текущий месяц: ";
-    } else {
-      text = "Сумма доходов за текущий месяц: ";
-    }
-    System.out.println(text + SumAmount(selected));
+    return selected;
   }
+
+  /**
+   * Выводит список расходов/доходов c сортировкой по дате и категориям, и итоговую сумму.
+   *
+   * @param selected отобранных записей
+   */
+  public static void printTypeList(List<Record> selected) {
+    selected.sort(new RecordDateCategoryAmountComparator());
+    Record record = selected.get(0);
+    String type = record.getType();
+    System.out.println();
+    System.out.println();
+    if (type.equals("expenses")) {
+      System.out.println("=== Расходы за текущий месяц: ===");
+    } else {
+      System.out.println("=== Доходы за текущий месяц: ===");
+    }
+    System.out.println("_________________________________");
+    for (Record r : selected) {
+      System.out.println(r);
+    }
+    System.out.println("_________________________________");
+    System.out.println("Итого: " + SumAmountToString(SumAmount(selected)) + " EUR");
+  }
+
+  /**
+   * Отбирает список по категории на текущий месяц.
+   *
+   * @param category для отбора из списка
+   */
+  public static List<Record> doCategoryList(String category) {
+    List<Record> records = RecordMethods.records;
+    List<Record> selected = new ArrayList<>();
+    int i = 0; // счетчик
+    boolean y = false; // флаг для определения пустого списка
+    for (Record record : records) {
+      if ((record.getCategory().equals(category)) && (record.getMonth()
+          == DateMethods.checkCurrentMonth())) {
+        selected.add(record);
+        ++i;
+        y = true;
+      }
+    }
+    if (!y) {
+      System.out.println("Список в этой категории пуст");
+    }
+    return selected;
+  }
+
+  /**
+   * Выводит список расходов/доходов c сортировкой по дате и категориям, и итоговую сумму.
+   *
+   * @param selected отобранных записей
+   */
+  public static void printCategoryList(List<Record> selected) {
+    selected.sort(new RecordDateCategoryAmountComparator());
+    Record record = selected.get(0);
+    String category = record.getCategory();
+    System.out.println();
+    System.out.println();
+    System.out.println("=== Расходы за текущий месяц в категории: " + category);
+    System.out.println("_________________________________");
+    for (Record r : selected) {
+      System.out.println(r);
+    }
+    System.out.println("_________________________________");
+    System.out.println("Итого: " + SumAmountToString(SumAmount(selected)) + " EUR");
+  }
+
 
   /**
    * Считает сумму денег в переданном списке, переводит результат в десятичную дробь с округлением
@@ -239,12 +305,19 @@ public class RecordMethods {
    * @param records список
    * @return строка с суммой
    */
-  public static String SumAmount(List<Record> records) {
+  public static int SumAmount(List<Record> records) {
     int result = 0;
     for (Record record : records) {
       result += record.getAmount();
     }
-    return Double.toString((double) result / 100);
+    return result;
+  }
+
+  /**
+   * Приводит сумму денег в вид для печати - с 2 знаками после запятой.
+   */
+  public static String SumAmountToString(int sumAmount) {
+    return Double.toString((double) sumAmount / 100);
   }
 
 
