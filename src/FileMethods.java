@@ -141,24 +141,37 @@ public class FileMethods {
       System.out.println();
       System.out.println("Новая запись:");
       System.out.print("Дата (\"ДД.ММ.ГГГГ\") - ");
-      String dateStr = RecordMethods.dateValidation(br);
-      System.out.print("Содержание ");
-      String article = br.readLine();
-      while (article.isEmpty()) {
-        System.out.println(Colors.RED + "Содержание не может быть пустым:" + Colors.RESET);
-        article = br.readLine();
+      String dateStr = RecordMethods.dateValidation(br); // проверка формата ввода
+      System.out.print("Доход/расход: (1/0): ");
+      int typeN = Integer.parseInt(br.readLine());
+      while ((typeN < 0) || typeN > 1) {
+        System.out.println(Colors.RED + "Доход - 1, расход - 0" + Colors.RESET);
+        typeN = Integer.parseInt(br.readLine());
+      }
+      String type;
+      String category;
+      Guide.expenses = Guide.readGuideE();
+      Guide.income = Guide.readGuideI();
+      if (typeN == 1) {
+        type = "Доход";
+        category = RecordMethods.categoryGuide(Guide.income, br);
+      } else {
+        type = "Расход";
+        category = RecordMethods.categoryGuide(Guide.expenses, br);
       }
       System.out.print("Сумма ");
       double amountD = Double.parseDouble(br.readLine());
-      while (amountD <= 0) {
+      while (amountD <= 0) { // должна быть больше 0
         System.out.println(Colors.RED + "Сумма должна быть >0: " + Colors.RESET);
         amountD = Double.parseDouble(br.readLine());
       }
       int amount = (int) amountD * 100;
-      System.out.print("Доход/расход: ");
-      String type = br.readLine();
-      System.out.print("Категория: ");
-      String category = br.readLine();
+      System.out.print("Содержание ");
+      String article = br.readLine();
+      while (article.isEmpty()) { // проверка на пустоту для названия
+        System.out.println(Colors.RED + "Содержание не может быть пустым:" + Colors.RESET);
+        article = br.readLine();
+      }
       Record record = new Record(dateStr, article, amount, type, category);
       records.add(record);
       System.out.print("Добавить новую запись (1-да, 2-выход): ");
