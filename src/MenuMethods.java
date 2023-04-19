@@ -68,7 +68,6 @@ public class MenuMethods {
   public static int readCommand(List<String> menu) throws IOException {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     System.out.println();
-    System.out.println();
     for (int i = 0; i < menu.size(); ++i) {
       System.out.println(("    " + (i + 1) + ". " + menu.get(i)));
     }
@@ -96,11 +95,11 @@ public class MenuMethods {
     int command = readCommand(menu);
     while (command != menu.size()) {
       switch (command) {
-        case 1 -> // Выбрать другой файл
+        case 1 ->                                               // Выбрать другой файл
             pathToFile_ = FileMethods.openFile(pathToFile_);
-        case 2 -> // Создать новый файл
+        case 2 ->                                               // Создать новый файл
             pathToFile_ = FileMethods.changeFile(pathToFile_);
-        case 3 -> { // Меню работы с таблицей
+        case 3 -> {                                             // Меню работы с таблицей
           RecordMethods.records = FileMethods.readFile();
           if (RecordMethods.records.size() == 0) {
             FileMethods.createNewList();
@@ -110,14 +109,14 @@ public class MenuMethods {
           Guide.income = Guide.readGuideI();
           menuTable();
         }
-        case 4 -> {
+        case 4 -> {                                             // Меню работы со справочниками
           Guide.expenses = Guide.readGuideE();
           Guide.income = Guide.readGuideI();
-          menuGuide();                          // Меню работы со справочниками
+          menuGuide();
         }
-        case 5 -> System.out.println("analytics");      // ????
+        case 5 -> System.out.println("analytics");              // ????
       }
-      command = readCommand(menu);                      // Выход из программы
+      command = readCommand(menu);                              // Выход из программы
     }
     System.out.println("До свидания!");
   }
@@ -132,16 +131,15 @@ public class MenuMethods {
     int command = readCommand(menu);
     while (command != menu.size()) {
       switch (command) {
-        case 1 -> RecordMethods.printRecord();   // Просмотр данных
-        case 2 -> RecordMethods.addRecord();    // Добавить запись
-        case 3 -> System.out.println("CHECK RECORD");  // Изменить запись
-        case 4 -> RecordMethods.removeRecord(); // Удалить запись
+        case 1 -> RecordMethods.printRecord();             // Просмотр данных
+        case 2 -> RecordMethods.addRecord();               // Добавить запись
+        case 3 -> RecordMethods.changeRecord();            // Изменить запись
+        case 4 -> RecordMethods.removeRecord();            // Удалить запись
         case 5 -> RecordMethods.printTypeList("expenses"); // Список расходов
-        case 6 -> RecordMethods.printTypeList("income"); // Список доходов
-        case 7 -> System.out.println("SORT1 RECORD");  // Сортировать по
-
+        case 6 -> RecordMethods.printTypeList("income");   // Список доходов
+        case 7 -> System.out.println("SORT1 RECORD");      // Сортировать по
       }
-      command = readCommand(menu);                     // Вернуться в основное меню
+      command = readCommand(menu);                         // Вернуться в основное меню
     }
     System.out.println("В основное меню");
   }
@@ -157,11 +155,11 @@ public class MenuMethods {
     while (command != menu.size()) {
       switch (command) {
         case 1 -> Guide.printGuideI();  // Просмотр статей доходов
-        case 2 -> Guide.addGuideI();   // Добавить статью дохода
-        case 3 -> Guide.printGuideE(); // Просмотр статей расходов
-        case 4 -> Guide.addGuideE();  // Добавить статью расхода
+        case 2 -> Guide.addGuideI();    // Добавить статью дохода
+        case 3 -> Guide.printGuideE();  // Просмотр статей расходов
+        case 4 -> Guide.addGuideE();    // Добавить статью расхода
       }
-      command = readCommand(menu);                   // Вернуться в основное меню
+      command = readCommand(menu);      // Вернуться в основное меню
     }
     System.out.println("В основное меню");
   }
