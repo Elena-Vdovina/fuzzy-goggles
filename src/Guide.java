@@ -22,7 +22,9 @@ public class Guide {
     List<String> income = new ArrayList<>();
     File pathGuide = new File("res/income.txt");                   // создали путь к файлу
     if (!pathGuide.exists()) {
-      pathGuide.createNewFile();                                       // создали файл, если его нет
+      if (!pathGuide.createNewFile()) {                                // создали файл, если его нет
+        System.out.println("У вас пустой справочник доходов");
+      }
     }
     BufferedReader br = new BufferedReader(new FileReader(pathGuide));
     for (String line = br.readLine(); line != null; line = br.readLine()) {
@@ -42,7 +44,9 @@ public class Guide {
     List<String> expenses = new ArrayList<>();
     File pathGuide = new File("res/expenses.txt");                 // создали путь к файлу
     if (!pathGuide.exists()) {
-      pathGuide.createNewFile();                                       // создали файл, если его нет
+      if (!pathGuide.createNewFile()) {                                // создали файл, если его нет
+        System.out.println("У вас пустой справочник расходов");
+      }
     }
     BufferedReader br = new BufferedReader(new FileReader(pathGuide));
     for (String line = br.readLine(); line != null; line = br.readLine()) {
@@ -53,7 +57,7 @@ public class Guide {
   }
 
   /**
-   * Метод печатает лист доходов на экран
+   * Метод печатает справочник доходов на экран
    */
   public static void printGuideI() {
     System.out.println();
@@ -84,7 +88,7 @@ public class Guide {
   }
 
   /**
-   * Метод печатает расходов на экран
+   * Метод печатает справочник расходов на экран
    */
   public static void printGuideE() {
     System.out.println();
@@ -118,7 +122,7 @@ public class Guide {
    * Метод записывает справочник в файл
    *
    * @param pathGuide имя файла справочника
-   * @param guide лист справочника
+   * @param guide     лист справочника
    * @throws IOException не обрабатывается
    */
   public static void writeGuide(String pathGuide, List<String> guide) throws IOException {
@@ -127,5 +131,26 @@ public class Guide {
       fileWriter.write(s + "\n");
     }
     fileWriter.close();
+  }
+
+  /**
+   * Метод печатает справочник на экран в два столбика
+   *
+   * @param guide лист справочника
+   */
+  public static void printGuide(List<String> guide) {
+    int n = guide.size() / 2;
+    if (guide.size() % 2 == 0) {
+      for (int i = 1; i < n + 1; ++i) {
+        System.out.printf("%2d %-25s     %2d %-25s\n", i, guide.get(i - 1), (n + i),
+            guide.get(n + i - 1));
+      }
+    } else {
+      for (int i = 1; i < n + 1; ++i) {
+        System.out.printf("%2d %-25s     %2d %-25s\n", i, guide.get(i - 1), (n + i + 1),
+            guide.get(n + i));
+      }
+      System.out.printf("%2d %-25s\n", (n + 1), guide.get(n));
+    }
   }
 }
