@@ -49,6 +49,10 @@ public class Record {
     return date;
   }
 
+  public int getMonth() {
+    return date.getMonth();
+  }
+
   public String getDateStr() {
     return formatter.format(date);
   }
