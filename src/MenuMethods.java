@@ -20,7 +20,6 @@ public class MenuMethods {
     menu.add("Создать новый файл");
     menu.add("Работать с данными");
     menu.add("Работать со справочниками");
-    menu.add("Структура доходов - расходов"); //???
     menu.add("Выход");
     return menu;
   }
@@ -32,13 +31,14 @@ public class MenuMethods {
    */
   private static List<String> listMenuT() {
     List<String> listMenuT = new ArrayList<>(7);
-    listMenuT.add("Просмотр данных");
-    listMenuT.add("Добавить запись");
-    listMenuT.add("Изменить запись");
-    listMenuT.add("Удалить запись");
-    listMenuT.add("Только расходы");
-    listMenuT.add("Только доходы");
-    listMenuT.add("Сортировать по");
+    listMenuT.add("Просмотр данных"); // 1
+    listMenuT.add("Добавить запись"); // 2
+    listMenuT.add("Изменить запись"); // 3
+    listMenuT.add("Удалить запись");  // 4
+    listMenuT.add("Только расходы");  // 5
+    listMenuT.add("Только доходы");   // 6
+    listMenuT.add("Структура доходов/расходов"); // 7
+    listMenuT.add("Выборка по категории -Продукты-"); // 8
     listMenuT.add("Вернуться в основное меню");
     return listMenuT;
   }
@@ -132,9 +132,14 @@ public class MenuMethods {
         case 2 -> RecordMethods.addRecord();               // Добавить запись
         case 3 -> RecordMethods.changeRecord();            // Изменить запись
         case 4 -> RecordMethods.removeRecord();            // Удалить запись
-        case 5 -> RecordMethods.printTypeList("expenses"); // Список расходов
-        case 6 -> RecordMethods.printTypeList("income");   // Список доходов
-        case 7 -> System.out.println("SORT1 RECORD");      // Сортировать по
+        case 5 ->
+            RecordMethods.printTypeList(RecordMethods.doTypeList("expenses")); // Список расходов
+        case 6 -> RecordMethods.printTypeList(RecordMethods.doTypeList("income")); // Список доходов
+        case 7 -> BugetMethods.drawTypeDiagram(
+            RecordMethods.SumAmount(RecordMethods.doTypeList("income")),
+            RecordMethods.SumAmount(RecordMethods.doTypeList("expenses")));  // Диаграмма
+        case 8 -> RecordMethods.printCategoryList(
+            RecordMethods.doCategoryList("Продукты")); // Список по категории "Продукты"
       }
       command = readCommand(menu);                         // Вернуться в основное меню
     }
