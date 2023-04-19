@@ -72,7 +72,7 @@ public class RecordMethods {
    */
   public static void changeRecord() throws IOException, ParseException {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    System.out.println("Введите номер записи для редактирования: ");
+    System.out.print("Введите номер записи для редактирования: ");
     int n = Integer.parseInt(br.readLine());
     Record record = RecordMethods.records.get(n - 1);
     System.out.println("Если строка ввода осталась пустой поле записи не меняется!");
