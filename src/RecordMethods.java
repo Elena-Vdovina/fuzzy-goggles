@@ -4,6 +4,7 @@ import java.io.InputStreamReader;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -104,6 +105,37 @@ public class RecordMethods {
       case "1", "ДА" -> answer = "1"; // выполнено
     }
     return Integer.parseInt(answer);
+  }
+
+  // Выводит список расходов/доходов c сортировкой по дате
+  public static void printTypeList(String type) throws IOException, ParseException {
+    List<Record> records = RecordMethods.records;
+    List<Record> selected = new ArrayList<>();
+    System.out.println();
+    for (Record record : records) {
+      if ((record.getType().equals(type))) {
+        selected.add(record);
+      }
+    }
+    selected.sort(new RecordDateCategoryAmountComparator());
+    for (Record record : selected) {
+      System.out.println(record);
+    }
+    String text;
+    if (type.equals("expenses")) {
+      text = "Сумма расходов за текущий месяц: ";
+    } else {
+      text = "Сумма доходов за текущий месяц: ";
+    }
+    System.out.println(text + SumAmount(selected));
+  }
+
+  public static String SumAmount(List<Record> records) throws IOException, ParseException {
+    int result = 0;
+    for (Record record : records) {
+      result += record.getAmount();
+    }
+    return Double.toString((double) result / 100);
   }
 
 

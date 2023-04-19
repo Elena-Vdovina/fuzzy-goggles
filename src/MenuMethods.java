@@ -136,8 +136,8 @@ public class MenuMethods {
         case 2 -> RecordMethods.addRecord();    // Добавить запись
         case 3 -> System.out.println("CHECK RECORD");  // Изменить запись
         case 4 -> RecordMethods.removeRecord(); // Удалить запись
-        case 5 -> System.out.println("SORT1 RECORD");//RecordMethods.printTypeList("expenses"); // Список расходов
-        case 6 -> System.out.println("SORT1 RECORD");//RecordMethods.printTypeList("income"); // Список доходов
+        case 5 -> RecordMethods.printTypeList("expenses"); // Список расходов
+        case 6 -> RecordMethods.printTypeList("income"); // Список доходов
         case 7 -> System.out.println("SORT1 RECORD");  // Сортировать по
 
       }
