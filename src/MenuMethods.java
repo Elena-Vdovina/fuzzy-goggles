@@ -110,8 +110,6 @@ public class MenuMethods {
           menuTable();
         }
         case 4 -> menuGuide();                                  // Меню работы со справочниками
-
-        case 5 -> System.out.println("analytics");              // ????
       }
       command = readCommand(menu);                              // Выход из программы
     }
@@ -133,13 +131,13 @@ public class MenuMethods {
         case 3 -> RecordMethods.changeRecord();            // Изменить запись
         case 4 -> RecordMethods.removeRecord();            // Удалить запись
         case 5 -> RecordMethods.printTypeList(RecordMethods.doTypeList("Расход"));
-        // Список расходов
+                                                           // Список расходов
         case 6 -> RecordMethods.printTypeList(RecordMethods.doTypeList("Доход")); // Список доходов
-        case 7 -> BugetMethods.drawTypeDiagram(
+        case 7 -> BudgetMethods.drawTypeDiagram(
             RecordMethods.SumAmount(RecordMethods.doTypeList("Доход")),
             RecordMethods.SumAmount(RecordMethods.doTypeList("Расход")));  // Диаграмма
         case 8 -> RecordMethods.printCategoryList(RecordMethods.doCategoryList());
-        // Список по категории "Продукты"
+                                                           // Выборка по категории
       }
       command = readCommand(menu);                         // Вернуться в основное меню
     }
