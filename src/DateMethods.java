@@ -5,16 +5,20 @@ public class DateMethods {
   /**
    * Получает текущий месяц из системной даты.
    *
-   * @return string month
+   * @return int month
    */
   public static int checkCurrentMonth() {
     Date current = new Date(); // записываем текущую системную дату
     return current.getMonth();
   }
 
-  public static int checkCurrentYear(){
+  /**
+   * Метод получает текущий год из системной даты
+   *
+   * @return int year
+   */
+  public static int checkCurrentYear() {
     Date current = new Date();
     return current.getYear();
   }
-
 }
