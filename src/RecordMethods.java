@@ -75,7 +75,6 @@ public class RecordMethods {
     System.out.print("Введите номер записи для редактирования: ");
     int n = Integer.parseInt(br.readLine());
     Record record = RecordMethods.records.get(n - 1);
-    System.out.println("Если строка ввода осталась пустой поле записи не меняется!");
     System.out.println("Дата " + record.getDateStr());
     System.out.print("Дата (\"ДД.ММ.ГГГГ\") - ");
     String dateStr = dateValidation(br);
@@ -214,10 +213,13 @@ public class RecordMethods {
   public static List<Record> doTypeList(String type) {
     List<Record> records = RecordMethods.records;
     List<Record> selected = new ArrayList<>();
+    System.out.println(DateMethods.checkCurrentMonth());
     int i = 0; // счетчик
     boolean y = false; // флаг для определения пустого списка
     for (Record record : records) {
-      if (record.getType().equals(type) && (record.getMonth() == DateMethods.checkCurrentMonth())) {
+      if (record.getType().equals(type) &&
+          (record.getMonth() == DateMethods.checkCurrentMonth()) &&
+          (record.getYear() == DateMethods.checkCurrentYear())) {
         selected.add(record);
         ++i;
         y = true;
@@ -230,42 +232,55 @@ public class RecordMethods {
   }
 
   /**
-   * Выводит список расходов/доходов c сортировкой по дате и категориям, и итоговую сумму.
+   * Выводит список расходов/доходов с сортировкой по дате и категориям, и итоговую сумму.
    *
    * @param selected отобранных записей
    */
   public static void printTypeList(List<Record> selected) {
     selected.sort(new RecordDateCategoryAmountComparator());
+    System.out.println(selected.get(0));
     Record record = selected.get(0);
     String type = record.getType();
     System.out.println();
     System.out.println();
-    if (type.equals("expenses")) {
+    if (type.equals("Расход")) {
       System.out.println("=== Расходы за текущий месяц: ===");
     } else {
       System.out.println("=== Доходы за текущий месяц: ===");
     }
-    System.out.println("_________________________________");
+    System.out.println("_________________________________________________________________________");
     for (Record r : selected) {
       System.out.println(r);
     }
-    System.out.println("_________________________________");
+    System.out.println("_________________________________________________________________________");
     System.out.println("Итого: " + SumAmountToString(SumAmount(selected)) + " EUR");
   }
 
   /**
    * Отбирает список по категории на текущий месяц.
-   *
-   * @param category для отбора из списка
    */
-  public static List<Record> doCategoryList(String category) {
+  public static List<Record> doCategoryList() throws IOException, ParseException {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    System.out.print("Доход/расход: (1/0): ");
+    int typeN = Integer.parseInt(br.readLine());
+    while ((typeN < 0) || typeN > 1) {
+      System.out.println(Colors.RED + "Доход - 1, расход - 0" + Colors.RESET);
+      typeN = Integer.parseInt(br.readLine());
+    }
+    String category;
+    if (typeN == 1) {
+      category = categoryGuide(Guide.income, br);
+    } else {
+      category = categoryGuide(Guide.expenses, br);
+    }
     List<Record> records = RecordMethods.records;
     List<Record> selected = new ArrayList<>();
     int i = 0; // счетчик
     boolean y = false; // флаг для определения пустого списка
     for (Record record : records) {
-      if ((record.getCategory().equals(category)) && (record.getMonth()
-          == DateMethods.checkCurrentMonth())) {
+      if ((record.getCategory().equals(category)) &&
+          (record.getMonth() == DateMethods.checkCurrentMonth()) &&
+          (record.getYear() == DateMethods.checkCurrentYear())) {
         selected.add(record);
         ++i;
         y = true;
@@ -273,12 +288,13 @@ public class RecordMethods {
     }
     if (!y) {
       System.out.println("Список в этой категории пуст");
+      MenuMethods.menuTable();
     }
     return selected;
   }
 
   /**
-   * Выводит список расходов/доходов c сортировкой по дате и категориям, и итоговую сумму.
+   * Выводит список расходов/доходов с сортировкой по дате и категориям, и итоговую сумму.
    *
    * @param selected отобранных записей
    */
@@ -288,13 +304,14 @@ public class RecordMethods {
     String category = record.getCategory();
     System.out.println();
     System.out.println();
-    System.out.println("=== Расходы за текущий месяц в категории: " + category);
-    System.out.println("_________________________________");
+    System.out.println("  === Расходы за текущий месяц в категории: " + category + " ===");
+    System.out.println("________________________________________________________________________");
     for (Record r : selected) {
       System.out.println(r);
     }
-    System.out.println("_________________________________");
-    System.out.println("Итого: " + SumAmountToString(SumAmount(selected)) + " EUR");
+    System.out.println("________________________________________________________________________");
+    System.out.println(
+        "Итого: " + SumAmountToString(SumAmount(selected)) + " EUR");
   }
 
 
@@ -319,6 +336,4 @@ public class RecordMethods {
   public static String SumAmountToString(int sumAmount) {
     return Double.toString((double) sumAmount / 100);
   }
-
-
 }
