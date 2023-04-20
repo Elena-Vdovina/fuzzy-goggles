@@ -16,7 +16,7 @@ public class Record {
       throws ParseException {
     setDate(dateStr);
     this.article = article;
-    this.amount=amount;
+    this.amount = amount;
     this.type = type;
     this.category = category;
   }
@@ -53,6 +53,10 @@ public class Record {
     return date.getMonth();
   }
 
+  public int getYear() {
+    return date.getYear();
+  }
+
   public String getDateStr() {
     return formatter.format(date);
   }
@@ -76,7 +80,7 @@ public class Record {
   @Override
   public String toString() {
     double amountD = (double) amount / 100;
-    return String.format("%-12s %-10s %-25s %10.2f  %-30s", getDateStr(), type,category, amountD,
+    return String.format("%-12s %-10s %-25s %10.2f  %-30s", getDateStr(), type, category, amountD,
         article);
   }
 
