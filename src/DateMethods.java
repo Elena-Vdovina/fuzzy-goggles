@@ -12,4 +12,9 @@ public class DateMethods {
     return current.getMonth();
   }
 
+  public static int checkCurrentYear(){
+    Date current = new Date();
+    return current.getYear();
+  }
+
 }
