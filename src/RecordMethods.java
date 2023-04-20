@@ -288,6 +288,18 @@ public class RecordMethods {
     return selected;
   }
 
+  public static int doSumCategory(String category) {
+    int result = 0;
+    for (Record record : RecordMethods.records) {
+      if ((record.getCategory().equals(category)) &&
+          (record.getMonth() == DateMethods.checkCurrentMonth()) &&
+          (record.getYear() == DateMethods.checkCurrentYear())) {
+        result += record.getAmount();
+      }
+    }
+    return result;
+  }
+
   /**
    * Выводит список расходов/доходов с сортировкой по дате и категориям, и итоговую сумму.
    *
