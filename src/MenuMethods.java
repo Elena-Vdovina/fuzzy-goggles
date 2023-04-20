@@ -38,7 +38,7 @@ public class MenuMethods {
     listMenuT.add("Только расходы");  // 5
     listMenuT.add("Только доходы");   // 6
     listMenuT.add("Структура доходов/расходов"); // 7
-    listMenuT.add("Выборка по категории -Продукты-"); // 8
+    listMenuT.add("Выборка по категории"); // 8
     listMenuT.add("Вернуться в основное меню");
     return listMenuT;
   }
@@ -132,14 +132,14 @@ public class MenuMethods {
         case 2 -> RecordMethods.addRecord();               // Добавить запись
         case 3 -> RecordMethods.changeRecord();            // Изменить запись
         case 4 -> RecordMethods.removeRecord();            // Удалить запись
-        case 5 ->
-            RecordMethods.printTypeList(RecordMethods.doTypeList("expenses")); // Список расходов
-        case 6 -> RecordMethods.printTypeList(RecordMethods.doTypeList("income")); // Список доходов
+        case 5 -> RecordMethods.printTypeList(RecordMethods.doTypeList("Расход"));
+        // Список расходов
+        case 6 -> RecordMethods.printTypeList(RecordMethods.doTypeList("Доход")); // Список доходов
         case 7 -> BugetMethods.drawTypeDiagram(
-            RecordMethods.SumAmount(RecordMethods.doTypeList("income")),
-            RecordMethods.SumAmount(RecordMethods.doTypeList("expenses")));  // Диаграмма
-        case 8 -> RecordMethods.printCategoryList(
-            RecordMethods.doCategoryList("Продукты")); // Список по категории "Продукты"
+            RecordMethods.SumAmount(RecordMethods.doTypeList("Доход")),
+            RecordMethods.SumAmount(RecordMethods.doTypeList("Расход")));  // Диаграмма
+        case 8 -> RecordMethods.printCategoryList(RecordMethods.doCategoryList());
+        // Список по категории "Продукты"
       }
       command = readCommand(menu);                         // Вернуться в основное меню
     }
