@@ -50,10 +50,10 @@ public class MenuMethods {
    */
   private static List<String> listMenuG() {
     List<String> listMenuG = new ArrayList<>(5);
-    listMenuG.add("Просмотр статей доходов");
-    listMenuG.add("Добавить статью доходов");
-    listMenuG.add("Просмотр статей расходов");
-    listMenuG.add("Добавить статью расходов");
+    listMenuG.add("Просмотр категорий доходов");
+    listMenuG.add("Добавить категорию доходов");
+    listMenuG.add("Просмотр категорий расходов");
+    listMenuG.add("Добавить категорию расходов");
     listMenuG.add("Вернуться в основное меню");
     return listMenuG;
   }
