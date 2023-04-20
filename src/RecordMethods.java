@@ -213,15 +213,12 @@ public class RecordMethods {
   public static List<Record> doTypeList(String type) {
     List<Record> records = RecordMethods.records;
     List<Record> selected = new ArrayList<>();
-    System.out.println(DateMethods.checkCurrentMonth());
-    int i = 0; // счетчик
     boolean y = false; // флаг для определения пустого списка
     for (Record record : records) {
       if (record.getType().equals(type) &&
           (record.getMonth() == DateMethods.checkCurrentMonth()) &&
           (record.getYear() == DateMethods.checkCurrentYear())) {
         selected.add(record);
-        ++i;
         y = true;
       }
     }
@@ -275,14 +272,12 @@ public class RecordMethods {
     }
     List<Record> records = RecordMethods.records;
     List<Record> selected = new ArrayList<>();
-    int i = 0; // счетчик
     boolean y = false; // флаг для определения пустого списка
     for (Record record : records) {
       if ((record.getCategory().equals(category)) &&
           (record.getMonth() == DateMethods.checkCurrentMonth()) &&
           (record.getYear() == DateMethods.checkCurrentYear())) {
         selected.add(record);
-        ++i;
         y = true;
       }
     }
