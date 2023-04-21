@@ -100,8 +100,7 @@ public class MenuMethods {
     int command = readCommand(menu);
     while (command != menu.size()) {
       switch (command) {
-        case 1 ->                                               // Выбрать другой файл
-            pathToFile_ = FileMethods.openFile(pathToFile_);
+        case 1 -> menuListOfFiles();                            // Выбрать другой файл
         case 2 ->                                               // Создать новый файл
             pathToFile_ = FileMethods.changeFile(pathToFile_);
         case 3 -> {                                             // Меню работы с таблицей
@@ -280,7 +279,13 @@ public class MenuMethods {
     return result;
   }
 
-  public static void ListOfFiles() throws IOException, ParseException {
+  /**
+   * Печатает меню из списка файлов в директории по умолчанию, а также команду для ввода пути к
+   * файлу с клавиатуры. Читает команду, запускает меню работы с файлами.
+   *
+   * @throws IOException Обработка некорректной команды
+   */
+  public static void menuListOfFiles() throws IOException, ParseException {
     File directoryPath = new File("res");
     String[] names = directoryPath.list(); // Получили массив с именами файлов
     if (names == null) {
