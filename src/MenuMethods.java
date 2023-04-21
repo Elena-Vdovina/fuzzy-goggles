@@ -60,7 +60,6 @@ public class MenuMethods {
     return listMenuG;
   }
 
-
   /**
    * Печатаем меню и читаем команду
    *
@@ -325,16 +324,14 @@ public class MenuMethods {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     int command = 0;
     while (command < 1 || command > menu.size() + 1) {
-      System.out.print("Введите номер команды: ");
+      System.out.print("Введите номер: ");
       try {
         command = Integer.parseInt(br.readLine());
       } catch (NumberFormatException e) {
-        System.err.println("Некорректная команда:: " + e.getMessage());
-        System.out.print("Введите номер команды: ");
+        System.err.println("Некорректная ввод: " + e.getMessage());
+        System.out.print("Введите номер: ");
       }
     }
     return command;
   }
 }
-
-
