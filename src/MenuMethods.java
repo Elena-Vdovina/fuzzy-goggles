@@ -1,8 +1,10 @@
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MenuMethods {
@@ -274,6 +276,28 @@ public class MenuMethods {
       result = Integer.parseInt(br.readLine());
     }
     return result;
+  }
+
+  public static void ListOfFiles() throws IOException, ParseException {
+    File directoryPath = new File("res");
+    String names[] = directoryPath.list(); // Получили массив с именами файлов
+    List<String> files = new ArrayList<>();
+    files.addAll(Arrays.asList(names)); // Переделали массив в список
+
+    MenuMethods.pathToFile_ = "";
+    System.out.println("Выберите файл для работы с данными:");
+
+    int command = readCommand(files);
+System.out.println(files.size());
+    if (command <= files.size()+1) {
+      MenuMethods.pathToFile_ = "res/" + files.get(command - 1);
+    }
+ /*   if (!(command == (files.size() + 1)));  {
+      // определяем файл пользователя
+      MenuMethods.pathToFile_ = FileMethods.openFile(MenuMethods.pathToFile_);
+    }
+    MenuMethods.pathToFile_ = FileMethods.openFile(MenuMethods.pathToFile_);
+   */ MenuMethods.menu();  // вход в основное меню
   }
 }
 
