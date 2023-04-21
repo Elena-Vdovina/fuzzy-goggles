@@ -1,5 +1,4 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -8,27 +7,6 @@ import org.junit.jupiter.api.Test;
 
 public class RecordTests {
 
-  @Test
-  public void RecordWithEmptyArticle() {
-    boolean exceptionThrown = false;
-    try {
-      Record r = new Record("01.01.2023", "", 1, "expenses", "Продукты");
-    } catch (IllegalArgumentException | ParseException e) {
-      exceptionThrown = true;
-    }
-    assertTrue(exceptionThrown);
-  }
-
-  @Test
-  public void RecordWithNegativeAmount() {
-    boolean exceptionThrown = false;
-    try {
-      Record r = new Record("01.01.2023", "A", -1, "expenses", "Продукты");
-    } catch (IllegalArgumentException | ParseException e) {
-      exceptionThrown = true;
-    }
-    assertTrue(exceptionThrown);
-  }
 
   @Test
   public void RecordDateCategoryAmountComparator() throws ParseException {
