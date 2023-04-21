@@ -60,6 +60,7 @@ public class MenuMethods {
     return listMenuG;
   }
 
+
   /**
    * Печатаем меню и читаем команду
    *
@@ -173,6 +174,7 @@ public class MenuMethods {
 
   /**
    * Метод выводит на экран горизонтальное меню выбора месяца
+   *
    * @param currentMonth при вызове из меню текущий месяц, при вызове из метода выбранный месяц
    * @return номер выбранного месяца
    * @throws IOException обработка неправильного ввода
@@ -280,24 +282,53 @@ public class MenuMethods {
 
   public static void ListOfFiles() throws IOException, ParseException {
     File directoryPath = new File("res");
-    String names[] = directoryPath.list(); // Получили массив с именами файлов
-    List<String> files = new ArrayList<>();
-    files.addAll(Arrays.asList(names)); // Переделали массив в список
+    String[] names = directoryPath.list(); // Получили массив с именами файлов
+    if (names == null) {
+      throw new AssertionError();
+    }
+    List<String> files = new ArrayList<>(Arrays.asList(names)); // Переделали массив в список
+    System.out.println();
+    System.out.println("Выберите файл для работы с данными:");
+    for (int i = 0; i < files.size(); ++i) {
+      System.out.println(("    " + (i + 1) + ". " + files.get(i)));
+    }
+    System.out.println("    " + (files.size() + 1) + ". " + "Ввести путь к файлу");
+    System.out.println();
 
     MenuMethods.pathToFile_ = "";
-    System.out.println("Выберите файл для работы с данными:");
-
-    int command = readCommand(files);
-System.out.println(files.size());
-    if (command <= files.size()+1) {
+    int command = readCommandForFiles(files);
+    if (command < files.size() + 1) {
       MenuMethods.pathToFile_ = "res/" + files.get(command - 1);
+      System.out.println("Выбран файл: " + files.get(command - 1));
+      MenuMethods.menu();  // вход в основное меню
     }
- /*   if (!(command == (files.size() + 1)));  {
+    if (command == files.size() + 1) {
       // определяем файл пользователя
       MenuMethods.pathToFile_ = FileMethods.openFile(MenuMethods.pathToFile_);
+      MenuMethods.menu();  // вход в основное меню
     }
-    MenuMethods.pathToFile_ = FileMethods.openFile(MenuMethods.pathToFile_);
-   */ MenuMethods.menu();  // вход в основное меню
+  }
+
+  /**
+   * Печатаем меню и читаем команду для выбора файла
+   *
+   * @param menu Меню по контексту
+   * @return command
+   * @throws IOException Обработка некорректной команды
+   */
+  public static int readCommandForFiles(List<String> menu) throws IOException {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    int command = 0;
+    while (command < 1 || command > menu.size() + 1) {
+      System.out.print("Введите номер команды: ");
+      try {
+        command = Integer.parseInt(br.readLine());
+      } catch (NumberFormatException e) {
+        System.err.println("Некорректная команда:: " + e.getMessage());
+        System.out.print("Введите номер команды: ");
+      }
+    }
+    return command;
   }
 }
 
