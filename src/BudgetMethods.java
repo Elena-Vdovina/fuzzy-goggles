@@ -43,7 +43,7 @@ public class BudgetMethods {
       System.out.println();
     }
     int month = MenuMethods.horizontalMenu(currentMonth + 1) - 1;
-    if (month != 12) {
+    if (month != 12 && month <= DateMethods.checkCurrentMonth()) {
       drawTypeDiagram(month,
           RecordMethods.SumAmount(RecordMethods.doTypeList(month, "Доход")),
           RecordMethods.SumAmount(RecordMethods.doTypeList(month, "Расход")));

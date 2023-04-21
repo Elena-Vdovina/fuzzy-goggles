@@ -259,7 +259,7 @@ public class RecordMethods {
     System.out.println("_________________________________________________________________________");
     System.out.println("Итого: " + SumAmountToString(SumAmount(selected)) + " EUR");
     int month = MenuMethods.horizontalMenu(currentMonth + 1) - 1;
-    if (month != 12) {
+    if (month != 12 && month <= DateMethods.checkCurrentMonth()) {
       RecordMethods.printTypeList(RecordMethods.doTypeList(month, category), month, category);
     }
   }
@@ -345,7 +345,7 @@ public class RecordMethods {
           "Итого: " + SumAmountToString(SumAmount(selected)) + " EUR");
     }
     int month = MenuMethods.horizontalMenu(currentMonth + 1) - 1;
-    if (month != 12) {
+    if (month != 12 && month <= DateMethods.checkCurrentMonth()) {
       RecordMethods.printCategoryList(RecordMethods.doCategoryList(month), month);
     }
   }
@@ -372,6 +372,4 @@ public class RecordMethods {
   public static String SumAmountToString(int sumAmount) {
     return Double.toString((double) sumAmount / 100);
   }
-
-
 }
