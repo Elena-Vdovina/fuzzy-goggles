@@ -123,6 +123,7 @@ public class MenuMethods {
    */
   public static void menuTable() throws IOException, ParseException {
     List<String> menu = listMenuT();
+    int currentMonth = DateMethods.checkCurrentMonth();
     int command = readCommand(menu);
     while (command != menu.size()) {
       switch (command) {
@@ -130,14 +131,18 @@ public class MenuMethods {
         case 2 -> RecordMethods.addRecord();               // Добавить запись
         case 3 -> RecordMethods.changeRecord();            // Изменить запись
         case 4 -> RecordMethods.removeRecord();            // Удалить запись
-        case 5 -> RecordMethods.printTypeList(RecordMethods.doTypeList("Расход"));
-                                                           // Список расходов
-        case 6 -> RecordMethods.printTypeList(RecordMethods.doTypeList("Доход")); // Список доходов
-        case 7 -> BudgetMethods.drawTypeDiagram(
-            RecordMethods.SumAmount(RecordMethods.doTypeList("Доход")),
-            RecordMethods.SumAmount(RecordMethods.doTypeList("Расход")));  // Диаграмма
-        case 8 -> RecordMethods.printCategoryList(RecordMethods.doCategoryList());
-                                                           // Выборка по категории
+        case 5 -> RecordMethods.printTypeList(
+            RecordMethods.doTypeList(currentMonth, "Расход"), currentMonth, "Расход");
+        // Список расходов
+        case 6 -> RecordMethods.printTypeList(
+            RecordMethods.doTypeList(currentMonth, "Доход"), currentMonth, "Доход");
+        // Список доходов
+        case 7 -> BudgetMethods.drawTypeDiagram(currentMonth,
+            RecordMethods.SumAmount(RecordMethods.doTypeList(currentMonth, "Доход")),
+            RecordMethods.SumAmount(RecordMethods.doTypeList(currentMonth, "Расход")));
+        // Диаграмма
+        case 8 -> RecordMethods.printCategoryList(RecordMethods.doCategoryList(currentMonth),
+            currentMonth);                                 // Выборка по категории
       }
       command = readCommand(menu);                         // Вернуться в основное меню
     }
@@ -163,4 +168,113 @@ public class MenuMethods {
     }
     System.out.println("В основное меню");
   }
+
+  /**
+   * Метод выводит на экран горизонтальное меню выбора месяца
+   * @param currentMonth при вызове из меню текущий месяц, при вызове из метода выбранный месяц
+   * @return номер выбранного месяца
+   * @throws IOException обработка неправильного ввода
+   */
+  public static int horizontalMenu(int currentMonth) throws IOException {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    System.out.println("Выберите месяц ");
+    int n = DateMethods.checkCurrentMonth();
+    String c1 = Colors.YELLOW;
+    String c2 = Colors.RESET;
+    for (int i = 1; i <= n + 1; ++i) {
+      if (i == 1) {
+        if (i == currentMonth) {
+          System.out.print(c1 + " 1 - Январь " + c2);
+        } else {
+          System.out.print(" 1 - Январь ");
+        }
+      }
+      if (i == 2) {
+        if (i == currentMonth) {
+          System.out.print(c1 + " 2 - Февраль " + c2);
+        } else {
+          System.out.print(" 2 - Февраль ");
+        }
+      }
+      if (i == 3) {
+        if (i == currentMonth) {
+          System.out.print(c1 + " 3 - Март " + c2);
+        } else {
+          System.out.print(" 3 - Март ");
+        }
+      }
+      if (i == 4) {
+        if (i == currentMonth) {
+          System.out.print(c1 + " 4 - Апрель " + c2);
+        } else {
+          System.out.print(" 4 - Апрель ");
+        }
+      }
+      if (i == 5) {
+        if (i == currentMonth) {
+          System.out.print(c1 + " 5 - Май " + c2);
+        } else {
+          System.out.print(" 5 - Май ");
+        }
+      }
+      if (i == 6) {
+        if (i == currentMonth) {
+          System.out.print(c1 + " 6 - Июнь " + c2);
+        } else {
+          System.out.print(" 6 - Июнь ");
+        }
+      }
+      if (i == 7) {
+        if (i == currentMonth) {
+          System.out.print(c1 + " 7 - Июль " + c2);
+        } else {
+          System.out.print(" 7 - Июль ");
+        }
+      }
+      if (i == 8) {
+        if (i == currentMonth) {
+          System.out.print(c1 + " 8 - Август " + c2);
+        } else {
+          System.out.print(" 8 - Август ");
+        }
+      }
+      if (i == 9) {
+        if (i == currentMonth) {
+          System.out.print(c1 + " 9 - Сентябрь " + c2);
+        } else {
+          System.out.print(" 9 - Сентябрь ");
+        }
+      }
+      if (i == 10) {
+        if (i == currentMonth) {
+          System.out.print(c1 + " 10 - Октябрь " + c2);
+        } else {
+          System.out.print(" 10 - Октябрь ");
+        }
+      }
+      if (i == 11) {
+        if (i == currentMonth) {
+          System.out.print(c1 + " 11 - Ноябрь " + c2);
+        } else {
+          System.out.print(" 11 - Ноябрь ");
+        }
+      }
+      if (i == 12) {
+        if (i == currentMonth) {
+          System.out.print(c1 + " 12 - Декабрь " + c2);
+        } else {
+          System.out.print(" 12 - Декабрь ");
+        }
+      }
+    }
+    System.out.println(" 13 - Выход");
+    int result = Integer.parseInt(br.readLine());
+    while ((result < 1) || result > 13) {
+      System.out.print(Colors.RED + "Повторите ввод: " + Colors.RESET);
+      result = Integer.parseInt(br.readLine());
+    }
+    return result;
+  }
 }
+
+
