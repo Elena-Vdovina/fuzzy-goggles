@@ -20,7 +20,7 @@ public class Guide {
    */
   public static List<String> readGuideI() throws IOException {
     List<String> income = new ArrayList<>();
-    File pathGuide = new File("res/income.txt");                   // создали путь к файлу
+    File pathGuide = new File("service/income.txt");                   // создали путь к файлу
     if (!pathGuide.exists()) {
       if (!pathGuide.createNewFile()) {                                // создали файл, если его нет
         System.out.println("У вас пустой справочник доходов");
@@ -42,7 +42,7 @@ public class Guide {
    */
   public static List<String> readGuideE() throws IOException {
     List<String> expenses = new ArrayList<>();
-    File pathGuide = new File("res/expenses.txt");                 // создали путь к файлу
+    File pathGuide = new File("service/expenses.txt");                 // создали путь к файлу
     if (!pathGuide.exists()) {
       if (!pathGuide.createNewFile()) {                                // создали файл, если его нет
         System.out.println("У вас пустой справочник расходов");
