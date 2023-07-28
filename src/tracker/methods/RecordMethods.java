@@ -12,7 +12,6 @@ import tracker.service.Colors;
 import tracker.record.Record;
 import tracker.comparator.RecordDateCategoryAmountComparator;
 
-
 public class RecordMethods {
 
   public static List<Record> records;
@@ -135,7 +134,6 @@ public class RecordMethods {
     printRecord();
   }
 
-
   /**
    * Метод выбора категории дохода/расхода
    *
@@ -172,6 +170,7 @@ public class RecordMethods {
           System.out.print(Colors.RED + "Дата не может быть пустой. " + Colors.RESET);
         }
         DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+        /* Нужна для тестов*/
         String dateTest = String.valueOf(formatter.parse(dateStr));
         tr = true;
       } catch (ParseException e) { //ошибка, если некорректный формат
@@ -222,7 +221,6 @@ public class RecordMethods {
     }
     return Integer.parseInt(answer);
   }
-
 
   /**
    * Выводит список расходов/доходов с сортировкой по дате и категориям, и итоговую сумму. Отбирает
@@ -373,7 +371,6 @@ public class RecordMethods {
       RecordMethods.printCategoryList(RecordMethods.doCategoryList(month), month);
     }
   }
-
 
   /**
    * Считает сумму денег в переданном списке, переводит результат в десятичную дробь с округлением
