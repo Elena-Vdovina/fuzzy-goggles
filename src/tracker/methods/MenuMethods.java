@@ -1,3 +1,5 @@
+package tracker.methods;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -6,6 +8,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import tracker.service.Colors;
 
 public class MenuMethods {
 
@@ -121,7 +124,8 @@ public class MenuMethods {
   /**
    * Подменю работы с таблицей данных
    *
-   * @throws IOException Обработка некорректной команды
+   * @throws IOException  Обработка некорректной команды
+   * @throws ParseException
    */
   public static void menuTable() throws IOException, ParseException {
     List<String> menu = listMenuT();
@@ -297,7 +301,7 @@ public class MenuMethods {
     for (int i = 0; i < files.size(); ++i) {
       System.out.println(("    " + (i + 1) + ". " + files.get(i)));
     }
-    System.out.println("    " + (files.size() + 1) + ". " + "Ввести путь к файлу");
+    System.out.println("    " + (files.size() + 1) + ". " + "Ввести имя файла");
     System.out.println();
 
     MenuMethods.pathToFile_ = "";
@@ -325,12 +329,12 @@ public class MenuMethods {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     int command = 0;
     while (command < 1 || command > menu.size() + 1) {
-      System.out.print("Введите номер команды: ");
+      System.out.print("Введите номер: ");
       try {
         command = Integer.parseInt(br.readLine());
       } catch (NumberFormatException e) {
         System.err.println("Некорректная команда:: " + e.getMessage());
-        System.out.print("Введите номер команды: ");
+        System.out.print("Введите номер: ");
       }
     }
     return command;

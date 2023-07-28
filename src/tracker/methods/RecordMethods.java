@@ -1,3 +1,5 @@
+package tracker.methods;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -6,7 +8,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-
+import tracker.service.Colors;
+import tracker.record.Record;
+import tracker.comparator.RecordDateCategoryAmountComparator;
 
 public class RecordMethods {
 
@@ -72,8 +76,22 @@ public class RecordMethods {
    */
   public static void changeRecord() throws IOException, ParseException {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    System.out.print("Введите номер записи для редактирования: ");
-    int n = Integer.parseInt(br.readLine());
+    int n =0;
+    while (n < 1 || n > records.size()) {
+      System.out.print("Введите номер записи для редактирования: ");
+      try {
+        n = Integer.parseInt(br.readLine());
+      } catch (NumberFormatException e) {
+        System.err.println("Некорректная команда:: " + e.getMessage());
+        System.out.print("Введите номер записи для редактирования: ");
+      }
+    }
+
+
+
+
+
+
     Record record = RecordMethods.records.get(n - 1);
     System.out.println("Дата " + record.getDateStr());
     System.out.print("Дата (\"ДД.ММ.ГГГГ\") - ");
@@ -116,7 +134,6 @@ public class RecordMethods {
     printRecord();
   }
 
-
   /**
    * Метод выбора категории дохода/расхода
    *
@@ -153,6 +170,7 @@ public class RecordMethods {
           System.out.print(Colors.RED + "Дата не может быть пустой. " + Colors.RESET);
         }
         DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+        /* Нужна для тестов*/
         String dateTest = String.valueOf(formatter.parse(dateStr));
         tr = true;
       } catch (ParseException e) { //ошибка, если некорректный формат
@@ -204,7 +222,6 @@ public class RecordMethods {
     return Integer.parseInt(answer);
   }
 
-
   /**
    * Выводит список расходов/доходов с сортировкой по дате и категориям, и итоговую сумму. Отбирает
    * список расходов/доходов за месяц.
@@ -213,7 +230,8 @@ public class RecordMethods {
    * @param type         тип записи(расходы/доходы) для отбора из списка
    * @return selected    отобранных записей
    */
-  public static List<Record> doTypeList(int currentMonth, String type) {
+  public static List<Record> doTypeList(int currentMonth, String type)
+      throws IOException, ParseException {
     List<Record> records = RecordMethods.records;
     List<Record> selected = new ArrayList<>();
     boolean y = false; // флаг для определения пустого списка
@@ -240,24 +258,28 @@ public class RecordMethods {
    * @throws IOException не обрабатывается
    */
   public static void printTypeList(List<Record> selected, int currentMonth, String category)
-      throws IOException {
-    selected.sort(new RecordDateCategoryAmountComparator());
-    System.out.println(selected.get(0));
-    Record record = selected.get(0);
-    String type = record.getType();
-    System.out.println();
-    System.out.println();
-    if (type.equals("Расход")) {
-      System.out.println("=== Расходы за месяц: ===");
-    } else {
-      System.out.println("=== Доходы за месяц: ===");
+      throws IOException, ParseException {
+    if (selected.size() != 0) {
+      selected.sort(new RecordDateCategoryAmountComparator());
+      System.out.println(selected.get(0));
+      Record record = selected.get(0);
+      String type = record.getType();
+      System.out.println();
+      System.out.println();
+      if (type.equals("Расход")) {
+        System.out.println("=== Расходы за месяц: ===");
+      } else {
+        System.out.println("=== Доходы за месяц: ===");
+      }
+      System.out.println(
+          "_________________________________________________________________________");
+      for (Record r : selected) {
+        System.out.println(r);
+      }
+      System.out.println(
+          "_________________________________________________________________________");
+      System.out.println("Итого: " + SumAmountToString(SumAmount(selected)) + " EUR");
     }
-    System.out.println("_________________________________________________________________________");
-    for (Record r : selected) {
-      System.out.println(r);
-    }
-    System.out.println("_________________________________________________________________________");
-    System.out.println("Итого: " + SumAmountToString(SumAmount(selected)) + " EUR");
     int month = MenuMethods.horizontalMenu(currentMonth + 1) - 1;
     if (month != 12 && month <= DateMethods.checkCurrentMonth()) {
       RecordMethods.printTypeList(RecordMethods.doTypeList(month, category), month, category);
@@ -350,7 +372,6 @@ public class RecordMethods {
     }
   }
 
-
   /**
    * Считает сумму денег в переданном списке, переводит результат в десятичную дробь с округлением
    * до сотых долей.
@@ -360,8 +381,10 @@ public class RecordMethods {
    */
   public static int SumAmount(List<Record> records) {
     int result = 0;
-    for (Record record : records) {
-      result += record.getAmount();
+    if (records.size()!=0) {
+      for (Record record : records) {
+        result += record.getAmount();
+      }
     }
     return result;
   }

@@ -1,3 +1,5 @@
+package tracker.methods;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -6,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import tracker.service.Colors;
 
 public class Guide {
 
@@ -20,7 +23,7 @@ public class Guide {
    */
   public static List<String> readGuideI() throws IOException {
     List<String> income = new ArrayList<>();
-    File pathGuide = new File("service/income.txt");                   // создали путь к файлу
+    File pathGuide = new File("service/income.txt");          // создали путь к файлу
     if (!pathGuide.exists()) {
       if (!pathGuide.createNewFile()) {                                // создали файл, если его нет
         System.out.println("У вас пустой справочник доходов");
@@ -42,7 +45,7 @@ public class Guide {
    */
   public static List<String> readGuideE() throws IOException {
     List<String> expenses = new ArrayList<>();
-    File pathGuide = new File("service/expenses.txt");                 // создали путь к файлу
+    File pathGuide = new File("service/expenses.txt");       // создали путь к файлу
     if (!pathGuide.exists()) {
       if (!pathGuide.createNewFile()) {                                // создали файл, если его нет
         System.out.println("У вас пустой справочник расходов");
