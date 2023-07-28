@@ -1,3 +1,5 @@
+package tracker.methods;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -9,6 +11,8 @@ import java.nio.file.Paths;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import tracker.service.Colors;
+import tracker.record.Record;
 
 public class FileMethods {
 
