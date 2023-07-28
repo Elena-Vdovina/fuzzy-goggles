@@ -230,8 +230,7 @@ public class RecordMethods {
    * @param type         тип записи(расходы/доходы) для отбора из списка
    * @return selected    отобранных записей
    */
-  public static List<Record> doTypeList(int currentMonth, String type)
-      throws IOException, ParseException {
+  public static List<Record> doTypeList(int currentMonth, String type) {
     List<Record> records = RecordMethods.records;
     List<Record> selected = new ArrayList<>();
     boolean y = false; // флаг для определения пустого списка
@@ -258,7 +257,7 @@ public class RecordMethods {
    * @throws IOException не обрабатывается
    */
   public static void printTypeList(List<Record> selected, int currentMonth, String category)
-      throws IOException, ParseException {
+      throws IOException {
     if (selected.size() != 0) {
       selected.sort(new RecordDateCategoryAmountComparator());
       System.out.println(selected.get(0));

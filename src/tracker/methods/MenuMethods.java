@@ -125,7 +125,7 @@ public class MenuMethods {
    * Подменю работы с таблицей данных
    *
    * @throws IOException  Обработка некорректной команды
-   * @throws ParseException
+   * @throws ParseException Обработка ошибки
    */
   public static void menuTable() throws IOException, ParseException {
     List<String> menu = listMenuT();
